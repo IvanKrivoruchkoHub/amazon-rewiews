@@ -27,10 +27,10 @@ public class InjectController {
         try {
             long startReading = System.currentTimeMillis();
             List<Review> reviews = customCSVParser.parseCSVFile("Reviews.csv");
-            LOGGER.info((System.currentTimeMillis() - startReading) * 0.001);
+            LOGGER.info(("Parsing - " + (System.currentTimeMillis() - startReading) * 0.001));
             long startSaving = System.currentTimeMillis();
             reviewService.saveAll(reviews);
-            LOGGER.info((System.currentTimeMillis() - startSaving) * 0.001);
+            LOGGER.info(("Save to db - " + (System.currentTimeMillis() - startSaving) * 0.001));
         } catch (IOException e) {
             LOGGER.error("Can't parse file", e);
         }

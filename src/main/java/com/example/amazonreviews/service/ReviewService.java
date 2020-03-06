@@ -1,5 +1,6 @@
 package com.example.amazonreviews.service;
 
+import com.example.amazonreviews.entity.Comment;
 import com.example.amazonreviews.entity.Review;
 
 import java.util.List;
@@ -13,4 +14,5 @@ public interface ReviewService {
 
     public List<String> findMostCommentedGoods(Integer count);
 
+    public List<String> findAllComments();
 }

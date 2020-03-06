@@ -1,5 +1,6 @@
 package com.example.amazonreviews.service;
 
+import com.example.amazonreviews.entity.Comment;
 import com.example.amazonreviews.entity.Review;
 import com.example.amazonreviews.repository.ReviewRepository;
 
@@ -31,5 +32,10 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public List<String> findMostCommentedGoods(Integer count) {
         return reviewRepository.findMostCommentedGoods(1000);
+    }
+
+    @Override
+    public List<String> findAllComments() {
+        return reviewRepository.findAllComments();
     }
 }
