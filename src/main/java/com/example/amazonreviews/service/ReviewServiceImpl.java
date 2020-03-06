@@ -32,4 +32,9 @@ public class ReviewServiceImpl implements ReviewService {
     public List<String> findMostCommentedGoods(Integer count) {
         return reviewRepository.findMostCommentedGoods(1000);
     }
+
+    @Override
+    public List<String> findAllComments() {
+        return reviewRepository.findAllComments();
+    }
 }
