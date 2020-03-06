@@ -13,4 +13,5 @@ public interface ReviewService {
 
     public List<String> findMostCommentedGoods(Integer count);
 
+    public List<String> findAllComments();
 }
