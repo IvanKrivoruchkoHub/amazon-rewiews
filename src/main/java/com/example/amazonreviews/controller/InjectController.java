@@ -1,7 +1,11 @@
 package com.example.amazonreviews.controller;
 
 import com.example.amazonreviews.entity.Review;
+import com.example.amazonreviews.entity.Role;
+import com.example.amazonreviews.entity.User;
 import com.example.amazonreviews.service.ReviewService;
+import com.example.amazonreviews.service.RoleService;
+import com.example.amazonreviews.service.UserService;
 import com.example.amazonreviews.utils.CustomCSVParser;
 
 import java.io.IOException;
@@ -11,6 +15,7 @@ import javax.annotation.PostConstruct;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -23,8 +28,33 @@ public class InjectController {
     @Autowired
     private CustomCSVParser customCSVParser;
 
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostConstruct
     public void init() {
+        Role userRole = new Role("USER");
+        userRole = roleService.save(userRole);
+        Role adminRole = new Role("ADMIN");
+        adminRole = roleService.save(adminRole);
+
+        User user = new User();
+        user.setLogin("user");
+        user.setPassword(passwordEncoder.encode("user"));
+        user.addRole(userRole);
+        userService.save(user);
+
+        User admin = new User();
+        admin.setLogin("admin");
+        admin.setPassword(passwordEncoder.encode("admin"));
+        admin.addRole(adminRole);
+        userService.save(admin);
         try {
             long startReading = System.currentTimeMillis();
             List<Review> reviews = customCSVParser.parseCSVFile("Reviews.csv");
