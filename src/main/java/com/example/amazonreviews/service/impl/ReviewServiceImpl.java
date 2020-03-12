@@ -1,7 +1,8 @@
-package com.example.amazonreviews.service;
+package com.example.amazonreviews.service.impl;
 
 import com.example.amazonreviews.entity.Review;
 import com.example.amazonreviews.repository.ReviewRepository;
+import com.example.amazonreviews.service.ReviewService;
 
 import java.util.List;
 
