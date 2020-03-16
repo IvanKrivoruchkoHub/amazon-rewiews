@@ -46,13 +46,6 @@ public class ReviewController {
     public List<String> getMostPopularWordsOfComments(
             @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
             @RequestParam(value = "count", required = false, defaultValue = "100") Integer count) {
-        /*long startGetting = System.currentTimeMillis();
-        List<String> comments = reviewService.findAllComments();
-        LOGGER.info("Get all comments - " + (System.currentTimeMillis() - startGetting) * 0.001);
-        long startCalculation = System.currentTimeMillis();
-        List<String> popularWords = wordsUtil.findMostPopularWords(comments);
-        LOGGER.info("Find Popular words - " + (System.currentTimeMillis() - startCalculation) * 0.001);
-         */
         if (page < 0 || count <= 0) {
             throw new IllegalArgumentException("Count or page invalid values");
         }
