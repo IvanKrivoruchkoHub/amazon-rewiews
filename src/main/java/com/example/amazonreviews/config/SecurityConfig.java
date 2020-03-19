@@ -51,7 +51,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/webjars/**",
                         "/h2-console/**",
                         "/authenticate").permitAll()
-                .antMatchers().permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
