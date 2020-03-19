@@ -8,8 +8,11 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,23 +27,28 @@ public class ReviewController {
     private WordsUtil wordsUtil;
 
     @GetMapping("/users")
-    public List<String> getMostActiveUsers() {
-        return reviewService.findActiveUsers(1000);
+    public List<String> getMostActiveUsers(
+            @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+            @RequestParam(value = "count", required = false, defaultValue = "100") Integer count) {
+        Pageable pageable = PageRequest.of(page, count);
+        return reviewService.findActiveUsers(1000, pageable);
     }
 
     @GetMapping("/goods")
-    public List<String> getMostCommentedGoods() {
-        return reviewService.findMostCommentedGoods(1000);
+    public List<String> getMostCommentedGoods(
+            @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+            @RequestParam(value = "count", required = false, defaultValue = "100") Integer count) {
+        Pageable pageable = PageRequest.of(page, count);
+        return reviewService.findMostCommentedGoods(1000, pageable);
     }
 
     @GetMapping("/words")
-    public List<String> getMostPopularWordsOfComments() {
-        long startGetting = System.currentTimeMillis();
-        List<String> comments = reviewService.findAllComments();
-        LOGGER.info("Get all comments - " + (System.currentTimeMillis() - startGetting) * 0.001);
-        long startCalculation = System.currentTimeMillis();
-        List<String> popularWords = wordsUtil.findMostPopularWords(comments);
-        LOGGER.info("Find Popular words - " + (System.currentTimeMillis() - startCalculation) * 0.001);
-        return popularWords;
+    public List<String> getMostPopularWordsOfComments(
+            @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+            @RequestParam(value = "count", required = false, defaultValue = "100") Integer count) {
+        if (page < 0 || count <= 0) {
+            throw new IllegalArgumentException("Count or page invalid values");
+        }
+        return reviewService.getMostPopularWords(page, count);
     }
 }
