@@ -23,9 +23,6 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
-    @Autowired
-    private WordsUtil wordsUtil;
-
     @GetMapping("/users")
     public List<String> getMostActiveUsers(
             @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
