@@ -1,7 +1,6 @@
 package com.example.amazonreviews.controller;
 
 import com.example.amazonreviews.service.ReviewService;
-import com.example.amazonreviews.utils.WordsUtil;
 
 import java.util.List;
 
@@ -22,9 +21,6 @@ public class ReviewController {
 
     @Autowired
     private ReviewService reviewService;
-
-    @Autowired
-    private WordsUtil wordsUtil;
 
     @GetMapping("/users")
     public List<String> getMostActiveUsers(

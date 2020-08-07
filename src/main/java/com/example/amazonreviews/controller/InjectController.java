@@ -17,6 +17,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 public class InjectController {
@@ -37,7 +40,8 @@ public class InjectController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @PostConstruct
+    @GetMapping("/inject")
+    @ResponseBody
     public void init() {
         Role userRole = new Role("USER");
         userRole = roleService.save(userRole);

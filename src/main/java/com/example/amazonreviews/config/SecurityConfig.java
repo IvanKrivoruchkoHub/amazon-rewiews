@@ -44,18 +44,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/reviews/words").hasRole("ADMIN")
                 .antMatchers( "/swagger-resources/**",
                         "/swagger-ui.html",
                         "/v2/api-docs",
                         "/webjars/**",
                         "/h2-console/**",
-                        "/authenticate").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .and()
-                .httpBasic();
+                        "/authenticate",
+                        "/inject").permitAll()
+                .antMatchers("/reviews/words").hasRole("ADMIN")
+                .anyRequest().permitAll();
 
         http
                 .exceptionHandling()
@@ -63,7 +60,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
