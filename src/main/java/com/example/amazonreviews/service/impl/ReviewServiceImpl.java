@@ -54,6 +54,4 @@ public class ReviewServiceImpl implements ReviewService {
         int endIndex = Math.min(beginIndex + count, popularWords.size());
         return popularWords.subList(beginIndex, endIndex);
     }
-
-
 }
