@@ -1,0 +1,29 @@
+version: '3'
+services:
+  app:
+    container_name: amazon-rewies
+    build: ./
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresdb:5432/amazon
+    ports:
+      - 8080:8080
+    expose:
+      - 8080
+    depends_on:
+      - postgresdb
+
+  postgresdb:
+    image: postgres:latest
+    container_name: postgresdb
+    ports:
+      - 5432:5433
+    expose:
+      - 5433
+    restart: always
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data/amazon
+    environment:
+      - POSTGRES_PASSWORD=user
+      - POSTGRES_USER=user
+      - POSTGRES_DB=amazon
+      - PGDATA=/var/lib/postgresql/data/amazon
